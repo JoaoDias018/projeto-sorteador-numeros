@@ -5,7 +5,11 @@ function sortear(){
     let de = parseInt(document.getElementById('de').value);
     let ate = parseInt(document.getElementById('ate').value);
 
-    validaNumeros(de, ate,quantidade);
+    if(validaNumeros(de, ate,quantidade) == 'Erro'){
+        limparCampos();
+        return;
+    }
+        
 
     let sorteados = [];
     let numero;
@@ -29,19 +33,25 @@ function sortear(){
 }
 
 function validaNumeros(de, ate, quantidade){
-    if(de == "" || ate == "" || quantidade == "" ) {
-        alert('Existe(m) campo(s) vazio(s).Por favor, verifique!');
-        return;
+
+    if(quantidade <= 0) {
+        alert('O campo "Quantidade" deve ser superior a 0. Por favor, verifique!');
+        return 'Erro';
+    }
+
+    if(isNaN(de) || isNaN(ate) || isNaN(quantidade)) {
+        alert('Existe(m) campo(s) vazio(s). Por favor, verifique!');
+        return 'Erro';
     }
         
     if (de >= ate) {
         alert('Campo "Do número" deve ser inferior ao campo "Até o número". Verifique!');
-        return; 
+        return 'Erro'; 
       }
 
-    if (quantidade > (ate - de)) {
+    if (quantidade > (ate - de) + 1) {
         alert('A quantidade informada deve ser inferior a quantidade de números existentes no intervalo. Verifique!');
-        return;
+        return 'Erro';
     }
 }
 
